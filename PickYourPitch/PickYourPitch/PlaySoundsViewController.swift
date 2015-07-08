@@ -26,11 +26,19 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl)
+        } catch _ {
+            audioPlayer = nil
+        }
         audioPlayer.enableRate = true
 
         audioEngine = AVAudioEngine()
-        audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl, error: nil)
+        do {
+            audioFile = try AVAudioFile(forReading: receivedAudio.filePathUrl)
+        } catch _ {
+            audioFile = nil
+        }
         
         setUserInterfaceToPlayMode(false)
     }
@@ -64,10 +72,10 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.stop()
         audioEngine.reset()
         
-        var audioPlayerNode = AVAudioPlayerNode()
+        let audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
         
-        var changePitchEffect = AVAudioUnitTimePitch()
+        let changePitchEffect = AVAudioUnitTimePitch()
         changePitchEffect.pitch = pitch
         audioEngine.attachNode(changePitchEffect)
         
@@ -79,13 +87,16 @@ class PlaySoundsViewController: UIViewController {
             dispatch_async(dispatch_get_main_queue()) {self.setUserInterfaceToPlayMode(false) }
         }
         
-        audioEngine.startAndReturnError(nil)
+        do {
+            try audioEngine.start()
+        } catch _ {
+        }
         
         audioPlayerNode.play()
     }
     
     @IBAction func sliderDidMove(sender: UISlider) {
         // Do nothing?
-        println("Slider value: \(sliderView.value)")
+        print("Slider value: \(sliderView.value)")
     }
 }
