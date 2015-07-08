@@ -41,18 +41,18 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
         } catch _ {
         }
-        
-        // Create the path to the file.
+
+        // Create a name for the file. This is the code that you are looking for
         let filename = "usersVoice.wav"
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         let pathArray = [dirPath, filename]
         let fileURL =  NSURL.fileURLWithPathComponents(pathArray)!
 
-        // Initialize and prepare the recorder
         do {
-            try audioRecorder = AVAudioRecorder(URL: fileURL, settings: [String : AnyObject]())
-        } catch _ {}
-
+            // Initialize and prepare the recorder
+            audioRecorder = try AVAudioRecorder(URL: fileURL, settings: [String: AnyObject]())
+        } catch _ {
+        }
         audioRecorder.delegate = self
         audioRecorder.meteringEnabled = true;
         audioRecorder.prepareToRecord()
