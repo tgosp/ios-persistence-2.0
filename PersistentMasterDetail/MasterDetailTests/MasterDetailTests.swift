@@ -1,15 +1,15 @@
 //
-//  PickYourPitchTests.swift
-//  PickYourPitchTests
+//  MasterDetailTests.swift
+//  MasterDetailTests
 //
-//  Created by Jason on 1/5/15.
+//  Created by Jason on 2/13/15.
 //  Copyright (c) 2015 Udacity. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class PickYourPitchTests: XCTestCase {
+class MasterDetailTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
