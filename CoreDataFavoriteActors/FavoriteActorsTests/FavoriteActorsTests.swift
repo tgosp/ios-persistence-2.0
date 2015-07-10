@@ -1,15 +1,15 @@
 //
-//  FetchedResultsControllerMasterDetailTests.swift
-//  FetchedResultsControllerMasterDetailTests
+//  FavoriteActorsTests.swift
+//  FavoriteActorsTests
 //
-//  Created by Jason on 3/24/15.
+//  Created by Jason on 1/31/15.
 //  Copyright (c) 2015 Udacity. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class FetchedResultsControllerMasterDetailTests: XCTestCase {
+class FavoriteActorsTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
