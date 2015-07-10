@@ -1,16 +1,11 @@
-//
-//  Person.swift
-//  TheMovieDB
-//
-//  Created by Jason on 1/11/15.
-//
 
 import UIKit
+import CoreData
 
-// NOTE: - The Person class now extends NSObject, and conforms to NSCoding
+@objc(Person)
 
-class Person : NSObject, NSCoding {
- 
+class Person : NSManagedObject {
+    
     struct Keys {
         static let Name = "name"
         static let ProfilePath = "profile_path"
@@ -18,18 +13,22 @@ class Person : NSObject, NSCoding {
         static let ID = "id"
     }
     
-    var name = ""
-    var id = 0
-    var imagePath = ""
-    var movies = [Movie]()
+    @NSManaged var name: String
+    @NSManaged var id: NSNumber
+    @NSManaged var imagePath: String?
+    @NSManaged var movies: [Movie]
     
-    init(dictionary: [String : AnyObject]) {
-        name = dictionary[Keys.Name] as! String
-        id = dictionary[TheMovieDB.Keys.ID] as! Int
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        if let pathForImgage = dictionary[Keys.ProfilePath] as? String {
-            imagePath = pathForImgage
-        }
+        let entity =  NSEntityDescription.entityForName("Person", inManagedObjectContext: context)!
+        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        name = dictionary[Keys.Name] as! String
+        id = dictionary[Keys.ID] as! Int
+        imagePath = dictionary[Keys.ProfilePath] as? String
     }
     
     var image: UIImage? {
@@ -38,30 +37,8 @@ class Person : NSObject, NSCoding {
         }
         
         set {
-            TheMovieDB.Caches.imageCache.storeImage(image, withIdentifier: imagePath)
+            TheMovieDB.Caches.imageCache.storeImage(image, withIdentifier: imagePath!)
         }
-    }
-    
-    
-    // MARK: - NSCoding
-    
-    func encodeWithCoder(archiver: NSCoder) {
-        
-        // archive the information inside the Person, one property at a time
-        archiver.encodeObject(name, forKey: Keys.Name)
-        archiver.encodeObject(id, forKey: Keys.ID)
-        archiver.encodeObject(imagePath, forKey: Keys.ProfilePath)
-        archiver.encodeObject(movies, forKey: Keys.Movies)
-    }
-
-    required init(coder unarchiver: NSCoder) {
-        super.init()
-        
-        // Unarchive the data, one property at a time
-        name = unarchiver.decodeObjectForKey(Keys.Name) as! String
-        id = unarchiver.decodeObjectForKey(Keys.ID) as! Int
-        imagePath = unarchiver.decodeObjectForKey(Keys.ProfilePath) as! String
-        movies = unarchiver.decodeObjectForKey(Keys.Movies) as! [Movie]
     }
 }
 

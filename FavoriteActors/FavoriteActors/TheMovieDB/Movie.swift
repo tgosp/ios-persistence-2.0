@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import CoreData
 
-class Movie : NSObject, NSCoding {
+@objc(Movie)
+
+class Movie : NSManagedObject {
     
     struct Keys {
         static let Title = "title"
@@ -15,18 +18,31 @@ class Movie : NSObject, NSCoding {
         static let ReleaseDate = "release_date"
     }
     
-    var title = ""
-    var id = 0
-    var posterPath: String? = nil
-    var releaseDate: NSDate? = nil
+    @NSManaged var title: String
+    @NSManaged var id: NSNumber
+    @NSManaged var posterPath: String?
+    @NSManaged var releaseDate: NSDate?
+    @NSManaged var actor: Person?
+    
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-    init(dictionary: [String : AnyObject]) {
+        // Core Data
+        let entity =  NSEntityDescription.entityForName("Movie", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
+        // Dictionary
         title = dictionary[Keys.Title] as! String
         id = dictionary[TheMovieDB.Keys.ID] as! Int
         posterPath = dictionary[Keys.PosterPath] as? String
         
-        if let releaseDateString = dictionary[Keys.ReleaseDate] as? String {
-            releaseDate = TheMovieDB.sharedDateFormatter.dateFromString(releaseDateString)
+        if let dateString = dictionary[Keys.ReleaseDate] as? String {
+            if let date = TheMovieDB.sharedDateFormatter.dateFromString(dateString) {
+                releaseDate = date
+            }
         }
     }
     
@@ -39,25 +55,6 @@ class Movie : NSObject, NSCoding {
         set {
             TheMovieDB.Caches.imageCache.storeImage(newValue, withIdentifier: posterPath!)
         }
-    }
-    
-    // MARK: - NSCoding
-    
-    func encodeWithCoder(archiver: NSCoder) {
-        
-        archiver.encodeInteger(id, forKey: TheMovieDB.Keys.ID)
-        archiver.encodeObject(title, forKey: Keys.Title)
-        archiver.encodeObject(posterPath, forKey: Keys.PosterPath)
-        archiver.encodeObject(releaseDate, forKey: Keys.ReleaseDate)
-    }
-    
-    required init(coder unarchiver: NSCoder) {
-        super.init()
-        
-        id = unarchiver.decodeIntegerForKey(TheMovieDB.Keys.ID)
-        title = unarchiver.decodeObjectForKey(Keys.Title) as! String
-        posterPath = unarchiver.decodeObjectForKey(Keys.PosterPath) as? String
-        releaseDate = unarchiver.decodeObjectForKey(Keys.ReleaseDate) as? NSDate
     }
 }
 
