@@ -26,9 +26,20 @@
 */
 
 import Foundation
+import CoreData
 
-class Event {
+@objc(Event)
 
-    var timeStamp = NSDate()
+class Event : NSManagedObject {
+
+    @NSManaged var timeStamp: NSDate
     
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entityForName("Event", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
 }
