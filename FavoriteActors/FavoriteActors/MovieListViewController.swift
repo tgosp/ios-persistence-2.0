@@ -31,7 +31,7 @@ class MovieListViewController : UITableViewController {
             let resource = TheMovieDB.Resources.PersonIDMovieCredits
             let parameters = [TheMovieDB.Keys.ID : actor.id]
             
-            TheMovieDB.sharedInstance().taskForResource(resource, parameters: parameters){ JSONResult, error  in
+            TheMovieDB.sharedInstance().taskForResource(resource, parameters: parameters){ (JSONResult: AnyObject!, error: NSError?) in
                 if let error = error {
                     self.alertViewForError(error)
                 } else {
