@@ -15,6 +15,8 @@ class MovieListViewController : UITableViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    lazy var sharedContext = {CoreDataStackManager.sharedInstance().managedObjectContext}()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -29,7 +31,7 @@ class MovieListViewController : UITableViewController {
         if actor.movies.isEmpty {
             
             let resource = TheMovieDB.Resources.PersonIDMovieCredits
-            var parameters = [TheMovieDB.Keys.ID : actor.id]
+            let parameters = [TheMovieDB.Keys.ID : actor.id]
             
             TheMovieDB.sharedInstance().taskForResource(resource, parameters: parameters){ JSONResult, error  in
                 if let error = error {
@@ -39,8 +41,8 @@ class MovieListViewController : UITableViewController {
                     if let moviesDictionaries = JSONResult.valueForKey("cast") as? [[String : AnyObject]] {
                         
                         // Parse the array of movies dictionaries
-                        var movies = moviesDictionaries.map() { (dictionary: [String : AnyObject]) -> Movie in
-                            let movie = Movie(dictionary: dictionary)
+                        moviesDictionaries.map() { (dictionary: [String : AnyObject]) -> Movie in
+                            let movie = Movie(dictionary: dictionary, context: self.sharedContext)
                             
                             // We associate this movie with it's actor by appending it to the array
                             // In core data we use the relationship. We set the movie's actor property
