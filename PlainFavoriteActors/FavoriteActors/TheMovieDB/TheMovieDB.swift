@@ -107,7 +107,7 @@ class TheMovieDB : NSObject {
                 return NSError(domain: "TMDB Error", code: 1, userInfo: userInfo)
             }
             
-        } catch {}
+        } catch _ {}
         
         return error
     }
@@ -213,20 +213,3 @@ class TheMovieDB : NSObject {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

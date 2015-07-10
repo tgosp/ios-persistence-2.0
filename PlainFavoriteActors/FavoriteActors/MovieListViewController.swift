@@ -3,7 +3,7 @@
 //  FavoriteActors
 //
 //  Created by Jason on 1/31/15.
-//  Copyright (c) 2015 CCSF. All rights reserved.
+//  Copyright (c) 2015 Udacity. All rights reserved.
 //
 
 import UIKit
@@ -29,7 +29,7 @@ class MovieListViewController : UITableViewController {
         if actor.movies.isEmpty {
             
             let resource = TheMovieDB.Resources.PersonIDMovieCredits
-            let parameters = [TheMovieDB.Keys.ID : actor.id]
+            var parameters = [TheMovieDB.Keys.ID : actor.id]
             
             TheMovieDB.sharedInstance().taskForResource(resource, parameters: parameters){ JSONResult, error  in
                 if let error = error {
@@ -39,12 +39,12 @@ class MovieListViewController : UITableViewController {
                     if let moviesDictionaries = JSONResult.valueForKey("cast") as? [[String : AnyObject]] {
                         
                         // Parse the array of movies dictionaries
-                        moviesDictionaries.map() { (dictionary: [String : AnyObject]) -> Movie in
+                        var movies = moviesDictionaries.map() { (dictionary: [String : AnyObject]) -> Movie in
                             let movie = Movie(dictionary: dictionary)
                             
                             // We associate this movie with it's actor by appending it to the array
                             // In core data we use the relationship. We set the movie's actor property
-                            self.actor.movies.append(movie)
+                            movie.actor = self.actor
                             
                             return movie
                         }
