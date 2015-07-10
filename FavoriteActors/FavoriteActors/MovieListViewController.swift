@@ -26,39 +26,31 @@ class MovieListViewController : UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if actor.movies == nil || actor.movies!.isEmpty {
+        if actor.movies.isEmpty {
             
             let resource = TheMovieDB.Resources.PersonIDMovieCredits
-            var parameters = [TheMovieDB.Keys.ID : actor.id]
+            let parameters = [TheMovieDB.Keys.ID : actor.id]
             
-            TheMovieDB.sharedInstance().taskForResource(resource, parameters: parameters) { JSONResult, error in
+            TheMovieDB.sharedInstance().taskForResource(resource, parameters: parameters){ JSONResult, error  in
                 if let error = error {
                     self.alertViewForError(error)
                 } else {
                     
                     if let moviesDictionaries = JSONResult.valueForKey("cast") as? [[String : AnyObject]] {
                         
+                        // Parse the array of movies dictionaries
+                        moviesDictionaries.map() { (dictionary: [String : AnyObject]) -> Movie in
+                            let movie = Movie(dictionary: dictionary, context: self.sharedContext)
+        
+                            movie.actor = self.actor
+                            
+                            return movie
+                        }
+                        
                         // Update the table on the main thread
                         dispatch_async(dispatch_get_main_queue()) {
-                            // Parse the array of movies dictionaries
-                            var movies = moviesDictionaries.map() { (dictionary: [String : AnyObject]) -> Movie in
-                                let movie = Movie(dictionary: dictionary, context: self.sharedContext)
-                                
-                                movie.actor = self.actor
-                                
-                                return movie
-                            }
-                            
                             self.tableView.reloadData()
                         }
-                        
-                        // Save the Context
-                        do {
-                            try self.sharedContext.save()
-                        } catch error {
-                            print(error)
-                        }
-                        
                     } else {
                         let error = NSError(domain: "Movie for Person Parsing. Cant find cast in \(JSONResult)", code: 0, userInfo: nil)
                         self.alertViewForError(error)
@@ -80,16 +72,15 @@ class MovieListViewController : UITableViewController {
     // MARK: - Table View
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return actor.movies?.count ?? 0
+        return actor.movies.count
     }
-    
-    /**
+        /**
     The downloading of movie posters is handled here. Notice how the method uses a unique
     table view cell that holds on to a task so that it can be canceled.
     */
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let movie = actor.movies![indexPath.row]
+        let movie = actor.movies[indexPath.row]
         let CellIdentifier = "MovieCell"
         var posterImage = UIImage(named: "posterPlaceHoldr")
         
@@ -100,7 +91,7 @@ class MovieListViewController : UITableViewController {
         
         // Set the Movie Poster Image
         
-        if movie.posterPath == nil || movie.posterPath == "" {
+        if movie.posterImage == "" {
             posterImage = UIImage(named: "noImage")
         } else if movie.posterImage != nil {
             posterImage = movie.posterImage
@@ -150,7 +141,7 @@ class MovieListViewController : UITableViewController {
         
         switch (editingStyle) {
         case .Delete:
-            actor.movies!.removeAtIndex(indexPath.row)
+            actor.movies.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         default:
             break
