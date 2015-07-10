@@ -74,8 +74,7 @@ class MovieListViewController : UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return actor.movies.count
     }
-    
-    /**
+        /**
     The downloading of movie posters is handled here. Notice how the method uses a unique
     table view cell that holds on to a task so that it can be canceled.
     */
@@ -92,7 +91,7 @@ class MovieListViewController : UITableViewController {
         
         // Set the Movie Poster Image
         
-        if movie.posterPath == nil || movie.posterPath == "" {
+        if movie.posterImage == "" {
             posterImage = UIImage(named: "noImage")
         } else if movie.posterImage != nil {
             posterImage = movie.posterImage
@@ -142,16 +141,8 @@ class MovieListViewController : UITableViewController {
         
         switch (editingStyle) {
         case .Delete:
-            let movie = actor.movies[indexPath.row]
-            
-            // Remove the movie from the actors array using the inverse relationship
-            movie.actor = nil
-            
-            // Remove the row from the table
+            actor.movies.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-            
-            // Remove the movie from the context
-            sharedContext.deleteObject(movie)
         default:
             break
         }
