@@ -198,7 +198,7 @@ class TheMovieDB : NSObject {
     // MARK: - Help with updating the Config
     func updateConfig(completionHandler: (didSucceed: Bool, error: NSError?) -> Void) {
         
-        var parameters = [String: AnyObject]()
+        let parameters = [String: AnyObject]()
         
         taskForResource(Resources.Config, parameters: parameters) { JSONResult, error in
             
