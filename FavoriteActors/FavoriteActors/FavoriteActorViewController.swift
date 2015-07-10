@@ -77,15 +77,33 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
         
         if let newActor = actor {
             
-            // Debugging output
-            print("picked actor with name: \(newActor.name),  id: \(newActor.id), profilePath: \(newActor.imagePath)")
-
             // Check to see if we already have this actor. If so, return.
             for a in actors {
                 if a.id == newActor.id {
                     return
                 }
-            }            
+            }
+            
+            // Create a dictionary from the actor. Careful, the imagePath can be hil.
+            
+            var dictionary = [String : AnyObject]()
+            dictionary[Person.Keys.ID] = newActor.id
+            dictionary[Person.Keys.Name] = newActor.name
+            
+            if let imagePath = newActor.imagePath {
+                dictionary[Person.Keys.ProfilePath] = imagePath
+            }
+
+            // Insert the actor on the main thread
+            
+            dispatch_async(dispatch_get_main_queue()) {
+             
+                // Init the Person, using the shared Context
+                let actorToBeAdded = Person(dictionary: dictionary, context: self.sharedContext)
+
+                // Append the actor to the array
+                self.actors.append(actorToBeAdded)
+            }
         }
     }
     
@@ -107,7 +125,7 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
         
         if let localImage = actor.image {
             cell.actorImageView.image = localImage
-        } else if actor.imagePath == "" {
+        } else if actor.imagePath == nil || actor.imagePath == "" {
             cell.actorImageView.image = UIImage(named: "personNoImage")
         }
             

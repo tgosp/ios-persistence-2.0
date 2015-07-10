@@ -27,35 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func generateSampleData() {
-        let context = managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName: "Person")
-        var actorCount: Int
-        
-        do {
-            actorCount = try context.executeFetchRequest(fetchRequest).count
-        } catch _ {
-            actorCount = 0
-        }
-        
-        var dictionary: [String : AnyObject]
-        var person: Person
-        
-        dictionary = ["name" : "Uma Thurman", "id" : 139, "profile_path" : "/1syarPILK8IIFvBHhlK8pdBZ2bz.jpg"]
-        person = Person(dictionary: dictionary, context: context)
-        
-        if actorCount == 0 {
-            
-            dictionary = ["name" : "LL Cool J", "id" : 36424, "profile_path" : "/bPZmMROI8KXbZl3ljNRmkU6Tnb3.jpg"]
-            person = Person(dictionary: dictionary, context: context)
-            
-            dictionary = ["name" : "Ellen Page", "id" : 27578, "profile_path" : "/vDunkYxyQPkzx9EwkfSZVCSzBlO.jpg"]
-            person = Person(dictionary: dictionary, context: context)
-            
-            dictionary = ["name" : "Bill Murray", "id" : 1532, "profile_path" : "/eb58HuFIrxS0zUmbmW4d8YXTbje.jpg"]
-            person = Person(dictionary: dictionary, context: context)
-            
-            saveContext()
-        }
+        // This is empty now. We will add actors for real from here on out.
     }
     
     func applicationWillResignActive(application: UIApplication) {
@@ -81,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Core Data stack
+    
     
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "OakStreetLabs.ThrowAway" in the application's documents Application Support directory.
