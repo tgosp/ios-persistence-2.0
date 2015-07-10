@@ -21,6 +21,14 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addActor")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // This method is invoked whenever the view appears, including when
+        // it appears after the actor picker is dismissed. That makes it a 
+        // good contender for saving the array
+    }
+    
     // Mark: - Actions
     
     func addActor() {
@@ -44,9 +52,9 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
                 }
             }
             
-            // If we didn't find any, then add
+            // If we didn't find any, then add (and maybe save the array?)
             self.actors.append(newActor)
-
+            
             // And reload the table
             self.tableView.reloadData()
         }
@@ -117,43 +125,4 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
             break
         }
     }
-    
-    // MARK: - Saving the array
-    
-    var actorsFilePath : String {
-        let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        return url.URLByAppendingPathComponent("actorsArray").path!
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
