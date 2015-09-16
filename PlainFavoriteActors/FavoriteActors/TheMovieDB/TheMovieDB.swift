@@ -155,8 +155,8 @@ class TheMovieDB : NSObject {
                 print("Warning: trouble excaping string \"\(stringValue)\"")
             }
         }
-        
-        return (!urlVars.isEmpty ? "?" : "") + "&".join(urlVars)
+        //return (!urlVars.isEmpty ? "?" : "") + "&".join(urlVars)
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
     
