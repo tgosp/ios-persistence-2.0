@@ -54,7 +54,7 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
         do {
             return try sharedContext.executeFetchRequest(fetchRequest) as! [Person]
         } catch  let error as NSError {
-            print("Error in fectchAllActors(): \(error)")
+            print("Error in fetchAllActors(): \(error)")
             return [Person]()
         }
     }
