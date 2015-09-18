@@ -156,7 +156,7 @@ class TheMovieDB : NSObject {
             }
         }
         
-        return (!urlVars.isEmpty ? "?" : "") + "&".join(urlVars)
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
     
