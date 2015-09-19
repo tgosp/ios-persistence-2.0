@@ -56,9 +56,9 @@ class TheMovieDB : NSObject {
             }
         }
         
-        task!.resume()
+        task.resume()
         
-        return task!
+        return task
     }
     
     // MARK: - All purpose task method for images
@@ -82,9 +82,9 @@ class TheMovieDB : NSObject {
             }
         }
         
-        task!.resume()
+        task.resume()
         
-        return task!
+        return task
     }
     
     
