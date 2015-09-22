@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if actorCount == 0 {
             
             let kevinBaconDictionary = ["name" : "Kevin Bacon", "id" : 21305, "profile_path":"/p1uCaOjxSC1xS5TgmD4uloAkbLd.jpg"]
-            let kevinBacon = Person(dictionary: kevinBaconDictionary, context: context)
+            let _ = Person(dictionary: kevinBaconDictionary, context: context)
             
             saveContext()
         }
