@@ -7,24 +7,20 @@ import UIKit
  * Person is a subclass of NSManagedObject. You will be modifying the Person class in the
  * "Plain Favorite Actors" Project so that it matches this file. 
  *
- * There are XX changes to be made. They are listed below, and called out in comments in the 
+ * There are 5 changes to be made. They are listed below, and called out in comments in the
  * code. 
  *
- * 1. import Core Data
- * 2. include the strange statement @objc(Person). This makes Person visible to Core Data code
- * 3. Make Person a subclass of NSManagedObject
- * 4. Add @NSManaged in front of each of the properties/attributes
- * 5. Include the standard Core Data init method, which inserts the object into a context
- * 6. Write an init method that takes a dictionary and a context. This the biggest chagne to the class
+ * 1. Import Core Data
+ * 2. Make Person a subclass of NSManagedObject
+ * 3. Add @NSManaged in front of each of the properties/attributes
+ * 4. Include the standard Core Data init method, which inserts the object into a context
+ * 5. Write an init method that takes a dictionary and a context. This is the biggest change to the class
  */
 
 // 1. Import CoreData
 import CoreData
 
-// 2. Make Person available to Objective-C code
-@objc(Person)
-
-// 3. Make Person a subclass of NSManagedObject
+// 2. Make Person a subclass of NSManagedObject
 class Person : NSManagedObject {
     
     struct Keys {
@@ -34,19 +30,19 @@ class Person : NSManagedObject {
         static let ID = "id"
     }
     
-    // 4. We are promoting these four from simple properties, to Core Data attributes
+    // 3. We are promoting these four from simple properties, to Core Data attributes
     @NSManaged var name: String
     @NSManaged var id: NSNumber
     @NSManaged var imagePath: String?
     @NSManaged var movies: [Movie]
     
-    // 5. Include this standard Core Data init method.
+    // 4. Include this standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
     /**
-     * 6. The two argument init method
+     * 5. The two argument init method
      *
      * The Two argument Init method. The method has two goals:
      *  - insert the new Person into a Core Data Managed Object Context
