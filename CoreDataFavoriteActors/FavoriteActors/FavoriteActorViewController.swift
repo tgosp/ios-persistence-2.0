@@ -208,12 +208,8 @@ class FavoriteActorViewController : UITableViewController, NSFetchedResultsContr
     // This is the most interesting method. Take particular note of way the that newIndexPath
     // parameter gets unwrapped and put into an array literal: [newIndexPath!]
     //
-    
-    func controller(controller: NSFetchedResultsController,
-        didChangeObject anObject: NSManagedObject,
-        atIndexPath indexPath: NSIndexPath?,
-        forChangeType type: NSFetchedResultsChangeType,
-        newIndexPath: NSIndexPath?) {
+
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
             
             switch type {
             case .Insert:
