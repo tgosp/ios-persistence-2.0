@@ -53,8 +53,12 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
         // Execute the Fetch Request
         do {
             return try sharedContext.executeFetchRequest(fetchRequest) as! [Person]
-        } catch _ {
+            
+        } catch let error as NSError {
+            
+            print("Error in fetchAllActors(): \(error)")
             return [Person]()
+            
         }
     }
 
