@@ -210,7 +210,7 @@ class FavoriteActorViewController : UITableViewController, NSFetchedResultsContr
     //
     
     func controller(controller: NSFetchedResultsController,
-        didChangeObject anObject: NSManagedObject,
+        didChangeObject anObject: AnyObject,
         atIndexPath indexPath: NSIndexPath?,
         forChangeType type: NSFetchedResultsChangeType,
         newIndexPath: NSIndexPath?) {
