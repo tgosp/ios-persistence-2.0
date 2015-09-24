@@ -49,7 +49,7 @@ class MovieListViewController : UITableViewController {
                     if let moviesDictionaries = JSONResult.valueForKey("cast") as? [[String : AnyObject]] {
                         
                         // Parse the array of movies dictionaries
-                        moviesDictionaries.map() { (dictionary: [String : AnyObject]) -> Movie in
+                        let _ = moviesDictionaries.map() { (dictionary: [String : AnyObject]) -> Movie in
                             let movie = Movie(dictionary: dictionary, context: self.sharedContext)
                             
                             movie.actor = self.actor
