@@ -191,9 +191,6 @@ class MovieListViewController : UITableViewController, NSFetchedResultsControlle
             case .Move:
                 tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-                
-            default:
-                return
             }
     }
     
