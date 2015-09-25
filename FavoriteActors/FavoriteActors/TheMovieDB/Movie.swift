@@ -8,7 +8,6 @@
 import UIKit
 import CoreData
 
-@objc(Movie)
 
 class Movie : NSManagedObject {
     
