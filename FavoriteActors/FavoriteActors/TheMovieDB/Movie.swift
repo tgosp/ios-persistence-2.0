@@ -8,8 +8,6 @@
 import UIKit
 import CoreData
 
-@objc(Movie)
-
 /**
 *   Notice that Movie is now a subclass of NSManagedObject.
 *   We will look at each change in this file in detail in Lesson 4.
