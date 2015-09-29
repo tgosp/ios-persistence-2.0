@@ -102,13 +102,14 @@ class ActorPickerViewController: UIViewController, UITableViewDelegate, UITableV
                 self.searchTask = nil
                 
                 // Create an array of Person instances from the JSON dictionaries
-                self.actors = actorDictionaries.map() {
-                    Person(dictionary: $0, context: self.temporaryContext)
-                }
-                
-                // Reload the table on the main thread
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.tableView!.reloadData()
+                self.temporaryContext.performBlock {
+                    self.actors = actorDictionaries.map() {
+                        Person(dictionary: $0, context: self.temporaryContext)
+                    }
+                    // Reload the table on the main thread
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.tableView!.reloadData()
+                    }
                 }
             }
         }
