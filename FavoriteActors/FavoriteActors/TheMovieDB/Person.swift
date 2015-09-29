@@ -9,8 +9,6 @@ import UIKit
 
 import CoreData
 
-@objc(Person)
-
 /**
  *   Notice that Person is now a subclass of NSManagedObject
  *   We will look at each change in this file in detail in Lesson 4.
