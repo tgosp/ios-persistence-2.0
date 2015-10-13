@@ -9,8 +9,6 @@
 import Foundation
 import CoreData
 
-@objc(Event)
-
 class Event: NSManagedObject {
 
     @NSManaged var timeStamp: NSDate
