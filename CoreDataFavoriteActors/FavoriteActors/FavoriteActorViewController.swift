@@ -31,12 +31,12 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
         // This will be removed in step 5
         actors = fetchAllActors()
         
-        // Step 2: invoke fetchedResultsController.performFetch(nil) here
+        // Step 2: invoke fetchedResultsController.performFetch() here, and add in the do, try, catch
         // Step 9: set the fetchedResultsController.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewWillAppear(animated)n
         
         tableView.reloadData()
     }
