@@ -96,6 +96,11 @@ class ActorPickerViewController: UIViewController, UITableViewDelegate, UITableV
                 dispatch_async(dispatch_get_main_queue()) {
                     self.tableView!.reloadData()
                 }
+                
+                /*********************************************** NOTE ***********************************************
+                In order for this new change to execute safely on the main thread, you'll need to surroud the above two statements (starting before "self.actors = ") with a performBlock function. performBlock is a function of NSManagedObjectContext, you can see how it's used here: https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Reference/CoreDataFramework/Classes/NSManagedObjectContext_Class/index.html#//apple_ref/occ/instm/NSManagedObjectContext/performBlock:
+                    (Use the same context that you used in the init Person call above.)
+                */
             }
         }
     }
