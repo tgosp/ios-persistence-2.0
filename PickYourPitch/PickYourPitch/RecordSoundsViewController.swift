@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Udacity. All rights reserved.
 //
 
+
 import UIKit
 import AVFoundation
 
@@ -17,16 +18,33 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     
     var audioRecorder:AVAudioRecorder!
     var recordedAudio:RecordedAudio!
-    var shouldSegueToSoundPlayer = false
+    var shouldSegueToPlaySoundsViewController = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if NSFileManager.defaultManager().fileExistsAtPath(audioFileURL().path!) {
+            print("The file already exists!")
+            shouldSegueToPlaySoundsViewController = true
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
-        //Hide the stop button
+        if shouldSegueToPlaySoundsViewController {
+            
+            // Set the variable back to false
+            shouldSegueToPlaySoundsViewController = false
+            
+            // Set the recordedAudio variable to our previously recorded file
+            recordedAudio = RecordedAudio(filePathUrl: audioFileURL(), title: audioFileURL().lastPathComponent)
+            
+            // Perform the segue
+            self.performSegueWithIdentifier("stopRecording", sender: self)
+        }
+        
+        // Hide the stop button
         stopButton.hidden = true
         recordButton.enabled = true
+        
     }
 
     @IBAction func recordAudio(sender: UIButton) {
