@@ -2,8 +2,6 @@
 import UIKit
 import CoreData
 
-@objc(Person)
-
 class Person : NSManagedObject {
     
     struct Keys {

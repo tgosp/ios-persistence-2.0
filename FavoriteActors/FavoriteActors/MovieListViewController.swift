@@ -29,7 +29,7 @@ class MovieListViewController : UITableViewController {
         if actor.movies.isEmpty {
             
             let resource = TheMovieDB.Resources.PersonIDMovieCredits
-            let parameters = [TheMovieDB.Keys.ID : actor.id]
+            let parameters = [TheMovieDB.Keys.ID : Int(actor.id)]
             
             TheMovieDB.sharedInstance().taskForResource(resource, parameters: parameters){ (JSONResult: AnyObject!, error: NSError?) in
                 if let error = error {
