@@ -31,7 +31,7 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
         // This will be removed in step 5
         actors = fetchAllActors()
         
-        // Step 2: invoke fetchedResultsController.performFetch(nil) here
+        // Step 2: invoke fetchedResultsController.performFetch() here, and add in the do, try, catch
         // Step 9: set the fetchedResultsController.delegate = self
     }
     
@@ -144,7 +144,7 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
     // You can accomplish this in two steps. First get the actor object in the same way you did in the previous two methods. 
     // Then delete the actor using this invocation
     // 
-    //        sharedContext.delete(actor)
+    //        sharedContext.deleteObject(actor)
     //
     // After that you do not need to delete the row from the table. That will be handled in the delegate. See reference sheet.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {

@@ -175,31 +175,3 @@ class MovieListViewController : UITableViewController {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
