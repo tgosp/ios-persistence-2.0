@@ -36,7 +36,7 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)n
+        super.viewWillAppear(animated)
         
         tableView.reloadData()
     }
@@ -144,7 +144,7 @@ class FavoriteActorViewController : UITableViewController, ActorPickerViewContro
     // You can accomplish this in two steps. First get the actor object in the same way you did in the previous two methods. 
     // Then delete the actor using this invocation
     // 
-    //        sharedContext.delete(actor)
+    //        sharedContext.deleteObject(actor)
     //
     // After that you do not need to delete the row from the table. That will be handled in the delegate. See reference sheet.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
