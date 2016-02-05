@@ -1,15 +1,15 @@
 //
-//  PlainMasterDetailTests.swift
-//  PlainMasterDetailTests
+//  CoreDataMasterDetailTests.swift
+//  CoreDataMasterDetailTests
 //
-//  Created by Jason on 3/18/15.
+//  Created by Jason on 3/24/15.
 //  Copyright (c) 2015 Udacity. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class PlainMasterDetailTests: XCTestCase {
+class CoreDataMasterDetailTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
